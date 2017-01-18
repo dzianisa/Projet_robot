@@ -183,3 +183,21 @@ int write_in_queue(RT_QUEUE *msgQueue, void * data, int size) {
 
     return err;
 }
+
+void verif_etat_batterie(void) {
+	int status;
+  rt_printf("tmove : Debut de l'éxecution de periodique à 250 ms\n");
+  rt_task_set_periodic(NULL, TM_NOW, 250000000);
+
+  while (1) {
+  	/* Attente de l'activation périodique */
+    rt_task_wait_period(NULL);
+    rt_printf("tmove : Activation périodique\n");
+
+    rt_mutex_acquire(&mutexEtat, TM_INFINITE);
+    status = etatCommRobot;
+    rt_mutex_release(&mutexEtat);
+	}
+
+	  
+}
